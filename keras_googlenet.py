@@ -49,15 +49,15 @@ def inception(input_data, channels):
 
 
 h = Convolution2D(64, 7, 7, border_mode='same', subsample=(2, 2), activation='relu')(input_img)
-h = MaxPooling2D(pool_size(3, 3), strides=(2, 2))(h)
+h = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(h)
 h = BatchNormalization(axis=0)(h)
 h = Convolution2D(64, 1, 1, border_mode='same', activation='relu')(h)
 h = Convolution2D(192, 3, 3, border_mode='same', activation='relu')(h)
 h = BatchNormalization(axis=0)(h)
-h = MaxPooling2D(pool_size(3, 3), strides=(2, 2))(h)
+h = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(h)
 h = inception(h, channels=(64, 96, 128, 16, 32, 32))
 h = inception(h, channels=(128, 128, 192, 32, 96, 64))
-h = MaxPooling2D(pool_size(3, 3), strides=(2, 2))(h)
+h = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(h)
 h = inception(h, channels=(192, 96, 208, 16, 48, 64))
 
 l = AveragePooling2D(pool_size=(5, 5), strides=(3, 3))(h)
@@ -77,7 +77,7 @@ l = Dense(1024, activation='relu')(l)
 loss2 = Dense(nb_classes, activation='softmax')(l)
 
 h = inception(h, channels=(256, 160, 320, 32, 128, 128))
-h = MaxPooling2D(pool_size(3, 3), strides=(2, 2))(h)
+h = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(h)
 h = inception(h, channels=(256, 160, 320, 32, 128, 128))
 h = inception(h, channels=(384, 192, 384, 48, 128, 128))
 h = AveragePooling2D(pool_size=(7, 7), strides=(1, 1))(h)
