@@ -48,7 +48,7 @@ def inception(input_data, channels):
 	return out
 
 
-h = Convolution2D(64, 7, 7, border_mode='same', subsample=(2, 2), activation='relu')(input_img)
+h = Convolution2D(64, 7, 7, border_mode='same', subsample=(2, 2), activation='relu', input_shape=(3, 224, 224))(input_img)
 h = MaxPooling2D(pool_size=(3, 3), strides=(2, 2))(h)
 h = BatchNormalization()(h)
 h = Convolution2D(64, 1, 1, border_mode='same', activation='relu')(h)
