@@ -86,7 +86,7 @@ h = Dropout(0.4)(h)
 h = Dense(nb_classes, activation='relu')(h)
 out = Dense(nb_classes, activation='softmax')(h)
 
-model = model(input=[input_img], output=[out, loss1, loss2])
+model = Model(input=[input_img], output=[out, loss1, loss2])
 
 model.compile(optimizer='adam',
 	loss={'out':'categorical_crossentropy', 'loss1':'categorical_crossentropy', 'loss2':'categorical_crossentropy'},
