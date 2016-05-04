@@ -100,9 +100,9 @@ X_train /= 255
 X_test /= 255
 
 
-model.fit(X_train, Y_train,
+model.fit(X_train, [Y_train, Y_train, Y_train],
 	batch_size=batch_size,
 	nb_epoch=nb_epoch,
-	validation_data=(X_test, Y_test),
+	validation_data=(X_test, [Y_test, Y_test, Y_test]),
 	shuffle=True
 )
