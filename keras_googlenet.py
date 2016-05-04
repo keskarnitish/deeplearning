@@ -89,7 +89,7 @@ out = Dense(nb_classes, activation='softmax')(h)
 model = Model(input=[input_img], output=[out, loss1, loss2])
 
 model.compile(optimizer='adam',
-	loss=['categorical_crossentropy'],
+	loss=['categorical_crossentropy', 'categorical_crossentropy', 'categorical_crossentropy'],
 	loss_weights=[1., 0.3, 0.3]
 )
 
