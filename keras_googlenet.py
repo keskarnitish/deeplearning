@@ -94,15 +94,28 @@ model.compile(optimizer='adam',
 )
 
 
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-X_train /= 255
-X_test /= 255
+# X_train = X_train.astype('float32')
+# X_test = X_test.astype('float32')
+# X_train /= 255
+# X_test /= 255
+
+datagen = ImageDataGenerator(
+	featurewise_center=True,
+	featurewise_std_normalization=True,
+	rotation_range=20,
+	width_shift_range=0.2,
+	height_shift_range=0.2,
+	horizontal_flip=True)
+
+datagen.fit(X_train)
+
+model.fit_generator(datagen.flow(X_train, Y_train, batch_size=batch_size, shuffle=True),
+	samples_per_epoch=len(X_train), nb_epoch=nb_epoch)
 
 
-model.fit(X_train, [Y_train, Y_train, Y_train],
-	batch_size=batch_size,
-	nb_epoch=nb_epoch,
-	validation_data=(X_test, [Y_test, Y_test, Y_test]),
-	shuffle=True
-)
+# model.fit(X_train, [Y_train, Y_train, Y_train],
+# 	batch_size=batch_size,
+# 	nb_epoch=nb_epoch,
+# 	validation_data=(X_test, [Y_test, Y_test, Y_test]),
+# 	shuffle=True
+# )
