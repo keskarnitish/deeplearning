@@ -94,8 +94,8 @@ model.compile(optimizer='adam',
 )
 
 
-# X_train = X_train.astype('float32')
-# X_test = X_test.astype('float32')
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
 # X_train /= 255
 # X_test /= 255
 
