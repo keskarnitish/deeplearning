@@ -35,13 +35,17 @@ X_test = X_test.astype('float32')
 # X_train /= 255
 # X_test /= 255
 
+# datagen = ImageDataGenerator(
+# 	featurewise_center=True,
+# 	featurewise_std_normalization=True,
+# 	rotation_range=20,
+# 	width_shift_range=0.2,
+# 	height_shift_range=0.2,
+# 	horizontal_flip=True)
+
 datagen = ImageDataGenerator(
 	featurewise_center=True,
-	featurewise_std_normalization=True,
-	rotation_range=20,
-	width_shift_range=0.2,
-	height_shift_range=0.2,
-	horizontal_flip=True)
+	featurewise_std_normalization=True)
 
 datagen.fit(X_train)
 
