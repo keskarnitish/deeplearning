@@ -47,7 +47,7 @@ datagen = ImageDataGenerator(
 	featurewise_center=True,
 	featurewise_std_normalization=True)
 
-datagen.fit(X_train)
+datagen.fit(X_train, argument=True)
 
 
 
