@@ -29,6 +29,27 @@ Y_test = np_utils.to_categorical(y_test, nb_classes)
 
 input_img = Input(shape=(img_channels, img_rows, img_cols))
 
+
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
+# X_train /= 255
+# X_test /= 255
+
+datagen = ImageDataGenerator(
+	featurewise_center=True,
+	featurewise_std_normalization=True,
+	rotation_range=20,
+	width_shift_range=0.2,
+	height_shift_range=0.2,
+	horizontal_flip=True)
+
+datagen.fit(X_train)
+
+
+
+
+
+
 # モデル定義
 def inception(input_data, channels):
 	c1, c2_1, c2_2, c3_1, c3_2, c4 = channels
@@ -93,21 +114,6 @@ model.compile(optimizer='adam',
 	loss_weights=[1., 0.3, 0.3]
 )
 
-
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-# X_train /= 255
-# X_test /= 255
-
-datagen = ImageDataGenerator(
-	featurewise_center=True,
-	featurewise_std_normalization=True,
-	rotation_range=20,
-	width_shift_range=0.2,
-	height_shift_range=0.2,
-	horizontal_flip=True)
-
-datagen.fit(X_train)
 
 model.fit_generator(datagen.flow(X_train, Y_train, batch_size=batch_size, shuffle=True),
 	samples_per_epoch=len(X_train), nb_epoch=nb_epoch)
