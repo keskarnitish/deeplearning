@@ -9,7 +9,7 @@ from keras.models import Model
 from keras.utils import np_utils
 
 img_channels = 3
-img_rows, img_cols = 224, 224
+img_rows, img_cols = 32, 32
 
 output_classes = 10
 
@@ -19,7 +19,6 @@ nb_epoch = 10
 data_augmentation = True
 
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
-X_train = X_train.repeat(7, axis=2).repeat(7, axis=3)
 print('X_train shape:', X_train.shape)
 print(X_train.shape[0], 'train samples')
 print(X_test.shape[0], 'test samples')
