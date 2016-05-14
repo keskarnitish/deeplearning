@@ -128,8 +128,11 @@ datagen.fit(X_train)
 
 
 
-model.fit_generator(datagen.flow(X_train, Y_train, batch_size=batch_size, shuffle=True),
-	samples_per_epoch=len(X_train), nb_epoch=nb_epoch)
+model.fit_generator(datagen.flow(X_train, Y_train,
+                        batch_size=batch_size),
+                        samples_per_epoch=X_train.shape[0],
+                        nb_epoch=nb_epoch,
+                        validation_data=(X_test, Y_test))
 
 
 # model.fit(X_train, [Y_train, Y_train, Y_train],
