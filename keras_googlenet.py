@@ -30,29 +30,6 @@ Y_test = np_utils.to_categorical(y_test, nb_classes)
 input_img = Input(shape=(img_channels, img_rows, img_cols))
 
 
-X_train = X_train.astype('float32')
-X_test = X_test.astype('float32')
-# X_train /= 255
-# X_test /= 255
-
-# datagen = ImageDataGenerator(
-# 	featurewise_center=True,
-# 	featurewise_std_normalization=True,
-# 	rotation_range=20,
-# 	width_shift_range=0.2,
-# 	height_shift_range=0.2,
-# 	horizontal_flip=True)
-
-datagen = ImageDataGenerator(
-	featurewise_center=True,
-	featurewise_std_normalization=True)
-
-datagen.fit(X_train, augment=True)
-
-
-
-
-
 
 # モデル定義
 def inception(input_data, channels):
@@ -117,6 +94,39 @@ model.compile(optimizer='adam',
 	loss=['categorical_crossentropy', 'categorical_crossentropy', 'categorical_crossentropy'],
 	loss_weights=[1., 0.3, 0.3]
 )
+
+
+
+X_train = X_train.astype('float32')
+X_test = X_test.astype('float32')
+X_train /= 255
+X_test /= 255
+
+# datagen = ImageDataGenerator(
+# 	featurewise_center=True,
+# 	featurewise_std_normalization=True,
+# 	rotation_range=20,
+# 	width_shift_range=0.2,
+# 	height_shift_range=0.2,
+# 	horizontal_flip=True)
+
+datagen = ImageDataGenerator(
+    featurewise_center=False,  # set input mean to 0 over the dataset
+    samplewise_center=False,  # set each sample mean to 0
+    featurewise_std_normalization=False,  # divide inputs by std of the dataset
+    samplewise_std_normalization=False,  # divide each input by its std
+    zca_whitening=False,  # apply ZCA whitening
+    rotation_range=0,  # randomly rotate images in the range (degrees, 0 to 180)
+    width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+    height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+    horizontal_flip=True,  # randomly flip images
+    vertical_flip=False)  # randomly flip images
+
+# compute quantities required for featurewise normalization
+# (std, mean, and principal components if ZCA whitening is applied)
+datagen.fit(X_train)
+
+
 
 
 model.fit_generator(datagen.flow(X_train, Y_train, batch_size=batch_size, shuffle=True),
