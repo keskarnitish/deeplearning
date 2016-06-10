@@ -9,7 +9,7 @@ from keras.models import Model
 from keras.utils import np_utils
 
 img_channels = 3
-img_rows, img_cols = 224, 224
+img_rows, img_cols = 32, 32
 
 output_classes = 10
 
@@ -19,7 +19,6 @@ nb_epoch = 10
 data_augmentation = True
 
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
-X_train = X_train.repeat(7, axis=2).repeat(7, axis=3)
 print('X_train shape:', X_train.shape)
 print(X_train.shape[0], 'train samples')
 print(X_test.shape[0], 'test samples')
@@ -28,6 +27,8 @@ Y_train = np_utils.to_categorical(y_train, nb_classes)
 Y_test = np_utils.to_categorical(y_test, nb_classes)
 
 input_img = Input(shape=(img_channels, img_rows, img_cols))
+
+
 
 # モデル定義
 def inception(input_data, channels):
@@ -94,23 +95,44 @@ model.compile(optimizer='adam',
 )
 
 
+
 X_train = X_train.astype('float32')
 X_test = X_test.astype('float32')
-# X_train /= 255
-# X_test /= 255
+X_train /= 255
+X_test /= 255
+
+# datagen = ImageDataGenerator(
+# 	featurewise_center=True,
+# 	featurewise_std_normalization=True,
+# 	rotation_range=20,
+# 	width_shift_range=0.2,
+# 	height_shift_range=0.2,
+# 	horizontal_flip=True)
 
 datagen = ImageDataGenerator(
-	featurewise_center=True,
-	featurewise_std_normalization=True,
-	rotation_range=20,
-	width_shift_range=0.2,
-	height_shift_range=0.2,
-	horizontal_flip=True)
+    featurewise_center=False,  # set input mean to 0 over the dataset
+    samplewise_center=False,  # set each sample mean to 0
+    featurewise_std_normalization=False,  # divide inputs by std of the dataset
+    samplewise_std_normalization=False,  # divide each input by its std
+    zca_whitening=False,  # apply ZCA whitening
+    rotation_range=0,  # randomly rotate images in the range (degrees, 0 to 180)
+    width_shift_range=0.1,  # randomly shift images horizontally (fraction of total width)
+    height_shift_range=0.1,  # randomly shift images vertically (fraction of total height)
+    horizontal_flip=True,  # randomly flip images
+    vertical_flip=False)  # randomly flip images
 
+# compute quantities required for featurewise normalization
+# (std, mean, and principal components if ZCA whitening is applied)
 datagen.fit(X_train)
 
-model.fit_generator(datagen.flow(X_train, Y_train, batch_size=batch_size, shuffle=True),
-	samples_per_epoch=len(X_train), nb_epoch=nb_epoch)
+
+
+
+model.fit_generator(datagen.flow(X_train, Y_train,
+                        batch_size=batch_size),
+                        samples_per_epoch=X_train.shape[0],
+                        nb_epoch=nb_epoch,
+                        validation_data=(X_test, Y_test))
 
 
 # model.fit(X_train, [Y_train, Y_train, Y_train],
