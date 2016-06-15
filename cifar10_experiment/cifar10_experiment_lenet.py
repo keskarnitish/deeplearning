@@ -23,7 +23,7 @@ lenet = network.lenet()
 from keras.datasets import cifar10
 
 batch_size = 128
-nb_epoch = 20
+nb_epoch = 5
 
 (X_train, y_train), (X_test, y_test) = cifar10.load_data()
 Y_train = np_utils.to_categorical(y_train, 10)
@@ -45,4 +45,4 @@ lehis = lenet.fit(X_train, Y_train,
 
 
 with open('history_lenet.dump', 'w') as f:
-    pickle.dump(lehis.history, f, -1)
+    pickle.dump(lehis, f, -1)
