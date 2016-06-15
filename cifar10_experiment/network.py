@@ -20,7 +20,7 @@ def lenet():
 	model.add(MaxPooling2D(pool_size=(2, 2), strides=(2, 2), border_mode='same'))
 	model.add(Flatten())
 	model.add(Dense(100, activation='relu'))
-	model.add(Dense(nb_class, activation='relu'))
+	model.add(Dense(nb_class, activation='softmax'))
 
 	return model
 
