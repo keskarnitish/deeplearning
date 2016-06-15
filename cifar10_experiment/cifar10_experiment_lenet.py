@@ -43,6 +43,5 @@ lehis = lenet.fit(X_train, Y_train,
               validation_data=(X_test, Y_test))
 
 
-
-with open('history_lenet.dump', 'w') as f:
+with open('history_lenet.dump', 'wb') as f:
     pickle.dump(lehis, f, -1)
