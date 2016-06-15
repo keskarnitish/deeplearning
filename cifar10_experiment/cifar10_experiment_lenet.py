@@ -13,20 +13,12 @@ from IPython.display import SVG
 from keras.utils import np_utils
 from keras.callbacks import EarlyStopping
 from matplotlib import pyplot as plt
-# %matplotlib inline
+
 plt.style.use("ggplot")
 import random
 import pickle
 
-
-# In[4]:
-
 lenet = network.lenet()
-
-# SVG(model_to_dot(lenet, show_shapes=True).create(prog='dot', format='svg'))
-
-
-# In[10]:
 
 from keras.datasets import cifar10
 
@@ -43,8 +35,6 @@ X_train /= 255
 X_test /= 255
 
 
-# In[11]:
-
 random.seed(1405)
 lenet.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 lehis = lenet.fit(X_train, Y_train,
@@ -53,8 +43,6 @@ lehis = lenet.fit(X_train, Y_train,
               validation_data=(X_test, Y_test))
 
 
-# In[ ]:
 
 with open('history_lenet.dump', 'w') as f:
-    pickle.dump(lehis.history, f)
-
+    pickle.dump(lehis.history, f, -1)
