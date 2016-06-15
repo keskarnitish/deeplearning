@@ -29,7 +29,7 @@ def alexnet():
 
 	model = Sequential()
 	model.add(Convolution2D(96, 11, 11, border_mode='same', input_shape=img_size))
-	model.add(BatchNormalization())
+	# model.add(BatchNormalization())
 	model.add(Activation('relu'))
 	model.add(MaxPooling2D(pool_size=(3,3), strides=(2,2), border_mode='same'))
 	model.add(Convolution2D(384, 3, 3, border_mode='same', activation='relu'))
