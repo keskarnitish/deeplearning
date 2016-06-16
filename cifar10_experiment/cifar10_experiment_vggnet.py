@@ -35,7 +35,7 @@ X_train /= 255
 X_test /= 255
 
 
-# random.seed(1405)
+random.seed(1405)
 vggnet.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 vgghis = vggnet.fit(X_train, Y_train,
               batch_size=batch_size,
