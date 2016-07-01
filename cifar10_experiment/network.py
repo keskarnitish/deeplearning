@@ -116,6 +116,7 @@ def resnet():
 	h = res_down(512, h)
 	h = res(512, h)
 	h = res(512, h)
+	h = AveragePooling2D(pool_size=(7, 7), strides=(1, 1), border_mode="same")(h) 
 	h = Flatten()(h)
 	out = Dense(nb_class, activation='softmax')(h)
 
